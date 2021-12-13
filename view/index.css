@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.display-none {
+    display: none;
+}
+
+/* googlefontのcss */
+.gf {
+    font-family: 'Yuji Mai', serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    padding: 10px;
+}
+
+#main-content {
+    width: 100%;
+}
+
+
+.scroll-fadein {
+    display: flex !important;
+    opacity: 0;
+    animation: scroll-fadein forwards 1s ease-in-out;
+}
+
+@keyframes scroll-fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+.topnav {
+    float: right;
+}
+
+.x-scroll {
+    display: flex;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.x-scroll::-webkit-scrollbar {
+    /* Chrome, Safari 対応 */
+    display: none;
+}
+
+.x-scroll .slide {
+    scroll-snap-align: start;
+    flex: none;
+    height: 100%;
+    box-sizing: border-box;
+}
