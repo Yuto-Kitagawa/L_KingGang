@@ -1,3 +1,16 @@
+<?php
+include "../class/function.php";
+$id = $_GET['id'];
+
+$func = new Functions;
+
+$item = $func->getItems($id)->fetch_assoc();
+$detail = $func->getDetail($id)->fetch_assoc();
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -41,7 +54,7 @@
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(90, 90, 90, 0.6);
         }
 
-        @media screen and (max-width:926px) {
+        @media screen and (max-width:970px) {
             .explain-wrapper {
                 display: flex;
                 flex-direction: column-reverse;
@@ -49,7 +62,7 @@
             }
         }
 
-        @media screen and (min-width:927px) {
+        @media screen and (min-width:971px) {
             .explain-wrapper {
                 width: 50%;
             }
@@ -82,9 +95,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">設定</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['username'] ?></a>
+                        <ul id="menu-bar" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#profile">プロフィール</a></li>
+                            <li><a class="dropdown-item" href="#">購入履歴</a></li>
+                            <li><a class="dropdown-item" href="#">投稿履歴</a></li>
+                            <li><a class="dropdown-item" href="../actions/logout.php">ログアウト</a></li>
+                        </ul>
+                    </li>
                 </ul>
-                <form action="post_lists.html?item=" class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required>
+                <form action="../actions/searchitem.php" method="POST" class="d-flex">
+                    <input class="form-control me-2" name="item" type="search" placeholder="Search" aria-label="Search" required>
                     <button class="btn btn-outline-dark" type="submit">Search</button>
                 </form>
             </div>
@@ -93,29 +115,29 @@
 
     <div class="w-100">
         <div class="explain-wrapper d-flex w-100 h-100">
-            <div class="h-100" style="border-right: 1px black solid;">
+            <div class="h-100 col-12 col-lg-6" style="border-right: 1px black solid;">
                 <div class="d-flex mx-5 align-items-center my-3">
-                    <div class="title display-6 text-center">とまと</div>
-                    <div class="price lead text-center m-auto " style="width: fit-content;">¥10000</div>
+                    <div class="title display-6 text-center"><?= $item['post_Name'] ?></div>
+                    <div class="price lead text-center m-auto " style="width: fit-content;">￥<?= $detail['detail_Price'] ?></div>
                 </div>
-                <div class="explain lead px-5">取れたてのトマトに・ゆゆゆゆでたてのパスタに・ふふふふれっしゅなオリーブ・いかがですか</div>
-                <hr>
+                <hr class="w-75 m-auto  my-5">
+                <div class="explain lead px-5"><?= $detail['detail_explanation'] ?></div>
+                <hr class="w-75 m-auto my-5">
                 <div class="d-flex align-items-center my-3 justify-content-evenly">
                     <div class="lead">取引先: </div>
-                    <div class="address lead">大阪市北区中崎長1-2-3</div>
+                    <div class="address lead"><?= $detail['detail_Location'] ?></div>
                 </div>
                 <div class="w-100 text-center my-5">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d209989.4496583871!2d135.34594990674734!3d34.67780033079795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e6553406e2e1%3A0xc55bc16ee46a2fe7!2z5aSn6Ziq5bqc5aSn6Ziq5biC!5e0!3m2!1sja!2sjp!4v1635145671609!5m2!1sja!2sjp" width="85%%" style="border:0;height: 40vh !important;" allowfullscreen="" loading="lazy"></iframe>
+                    <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d209989.4496583871!2d135.34594990674734!3d34.67780033079795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e6553406e2e1%3A0xc55bc16ee46a2fe7!2z5aSn6Ziq5bqc5aSn6Ziq5biC!5e0!3m2!1sja!2sjp!4v1635145671609!5m2!1sja!2sjp" width="85%%" style="border:0;height: 40vh !important;" allowfullscreen="" loading="lazy"></iframe> -->
                 </div>
                 <div class="w-100 text-center">
-                    <a href="./chat.php" class="btn btn-outline-primary w-25">相談</a>
+                    <a href="./chat.php?userid=<?= $item['user_Id'] ?>" class="btn btn-outline-primary w-25">相談</a>
                 </div>
             </div>
-            <div class="pic-wrapper h-100 text-center">
-                <img src="../img/login_photo.jpg" height="100%" width="100%" style="object-fit: cover;" alt="">
+            <div class="pic-wrapper h-100 text-center col-12 col-lg-6">
+                <img src="../img/<?= $detail['detail_Image1'] ?>" height="100%" width="100%" style="object-fit: cover;" alt="">
             </div>
         </div>
-
     </div>
 
     <script>
