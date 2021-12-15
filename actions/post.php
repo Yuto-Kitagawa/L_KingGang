@@ -36,6 +36,12 @@ if (!empty($_FILES['pic3']['name'])) {
 
 if (!empty($_POST['content'])) {
     $content = $_POST['content'];
+    
+}
+if (!empty($_POST['season'])) {
+    $season = $_POST['season'];
+} else {
+    $season = null;
 }
 
 if (!empty($_POST['category'])) {
@@ -56,4 +62,4 @@ $func = new Functions();
 // 下2行コメント外す
 session_start();
 $id = $_SESSION['id'];
-$func->post($id, $title, $content, $pic1, $pic1_tmp, $pic2, $pic2_tmp, $pic3, $pic3_tmp, $price, $location, $cate);
+$func->post($id, $title, $content, $pic1, $pic1_tmp, $pic2, $pic2_tmp, $pic3, $pic3_tmp, $price, $location, $cate,$season);

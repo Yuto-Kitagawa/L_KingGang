@@ -127,6 +127,17 @@ session_start();
                     <div class="input-price-wrapper m-4">
                         <input class="p-2 w-25 m-auto mb-3 form-control" type="number" name="price" id="" placeholder="値段(円)　*必須" required>
                     </div>
+
+                    <div class="input-season-wrapper p-2 m-4">
+                        <select class="form-select w-25 m-auto" name="season" aria-label="Default select example">
+                            <option selected>季節を選択</option>
+                            <option value="1">春</option>
+                            <option value="2">夏</option>
+                            <option value="3">秋</option>
+                            <option value="4">冬</option>
+                        </select>
+                    </div>
+
                     <div class="input-cate-wrapper p-2 m-4">
                         <select class="form-select w-25 m-auto" name="category" aria-label="Default select example">
                             <option selected>カテゴリーを選択</option>

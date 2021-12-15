@@ -87,7 +87,7 @@ class Functions extends Database
         }
     }
 
-    public function post($id, $title, $content, $pic1, $newImageTmppic1, $pic2, $newImageTmppic2, $pic3, $newImageTmppic3, $price, $location,$cate)
+    public function post($id, $title, $content, $pic1, $newImageTmppic1, $pic2, $newImageTmppic2, $pic3, $newImageTmppic3, $price, $location,$cate,$season)
     {
         //post tableに格納
         $sql = "INSERT INTO post (`user_Id`,post_Name) VALUES ('$id','$title');";
@@ -100,16 +100,16 @@ class Functions extends Database
 
                 //写真が何枚あるかでSQL文を変化
                 if ($newImageTmppic2 == null) {
-                    $sql3 = "INSERT INTO detail (post_No,detail_Image1,detail_Location,detail_Price,detail_explanation,detail_Category) VALUES ($postId,'$pic1','$location',$price,'$content',$cate);";
+                    $sql3 = "INSERT INTO detail (post_No,detail_Image1,detail_Location,detail_Price,detail_explanation,detail_Category,detail_Season) VALUES ($postId,'$pic1','$location',$price,'$content',$cate,$season);";
                     $destination = "../img/" . basename($pic1);
                     move_uploaded_file($newImageTmppic1, $destination);
                 } else {
                     if ($newImageTmppic3 == null) {
-                        $sql3 = "INSERT INTO detail (post_No,detail_Image1,detail_Image2,detail_Location,detail_Price,detail_explanation,detail_Category) VALUES ($postId,'$pic1','$pic2','$location',$price,'$content',$cate);";
+                        $sql3 = "INSERT INTO detail (post_No,detail_Image1,detail_Image2,detail_Location,detail_Price,detail_explanation,detail_Category,detail_Season) VALUES ($postId,'$pic1','$pic2','$location',$price,'$content',$cate,$season);";
                         $destination = "../img/" . basename($pic2);
                         move_uploaded_file($newImageTmppic2, $destination);
                     } else {
-                        $sql3 = "INSERT INTO detail (post_No,detail_Image1,detail_Image2,detail_Image3,detail_Location,detail_Price,detail_explanation,detail_Category) VALUES ($postId,'$pic1','$pic2','$pic3','$location',$price,'$content',$cate);";
+                        $sql3 = "INSERT INTO detail (post_No,detail_Image1,detail_Image2,detail_Image3,detail_Location,detail_Price,detail_explanation,detail_Category,detail_Season) VALUES ($postId,'$pic1','$pic2','$pic3','$location',$price,'$content',$cate,$season);";
                         $destination = "../img/" . basename($pic2);
                         move_uploaded_file($newImageTmppic2, $destination);
                         $destination = "../img/" . basename($pic3);
