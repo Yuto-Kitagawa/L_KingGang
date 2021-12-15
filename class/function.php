@@ -13,7 +13,7 @@ class Functions extends Database
 
     public function getItems($item)
     {
-        $sql = "SELECT * FROM post WHERE post_Name LIKE '$item';";
+        $sql = "SELECT * FROM post WHERE post_No = $item;";
         if ($result = $this->conn->query($sql)) {
             return $result;
         } else {
@@ -21,9 +21,40 @@ class Functions extends Database
             die();
         }
     }
+
+    public function getItemsList($item)
+    {
+        $sql = "SELECT * FROM post WHERE post_Name LIKE '%$item%';";
+        if ($result = $this->conn->query($sql)) {
+            return $result;
+        }
+    }
+
+    public function getItemsListDetail($id)
+    {
+        $sql = "SELECT * FROM detail WHERE post_No = $id;";
+        if ($result = $this->conn->query($sql)) {
+            return $result;
+        } else {
+            var_dump($this->conn->error);
+            die();
+        }
+    }
+
+    public function getProfile($id)
+    {
+        $sql = "SELECT * FROM user WHERE user_Id = '$id';";
+        if ($result = $this->conn->query($sql)) {
+            return $result;
+        } else {
+            var_dump($this->conn->error);
+            die();
+        }
+    }
+
     public function getDetail($id)
     {
-        $sql = "SELECT * FROM detail WHERE post_No == '$id';";
+        $sql = "SELECT * FROM detail WHERE post_No = $id;";
         $result = $this->conn->query($sql);
         return $result;
     }
@@ -81,13 +112,13 @@ class Functions extends Database
                 $_SESSION['username'] = $username;
                 $_SESSION['id'] = $email;
                 session_write_close();
-                header('Location: ../view/home.html');
+                header('Location: ../view/home.php');
                 exit();
             }
         }
     }
 
-    public function post($id, $title, $content, $pic1, $newImageTmppic1, $pic2, $newImageTmppic2, $pic3, $newImageTmppic3, $price, $location,$cate,$season)
+    public function post($id, $title, $content, $pic1, $newImageTmppic1, $pic2, $newImageTmppic2, $pic3, $newImageTmppic3, $price, $location, $cate, $season)
     {
         //post tableに格納
         $sql = "INSERT INTO post (`user_Id`,post_Name) VALUES ('$id','$title');";
@@ -137,6 +168,34 @@ class Functions extends Database
     public function getElecProducts()
     {
         $sql = "SELECT * FROM detail WHERE detail_Category = 1";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+    public function getFuniProducts()
+    {
+        $sql = "SELECT * FROM detail WHERE detail_Category = 2";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+    public function getInteProducts()
+    {
+        $sql = "SELECT * FROM detail WHERE detail_Category = 3";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+    public function getHukuProducts()
+    {
+        $sql = "SELECT * FROM detail WHERE detail_Category = 4";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+    public function getSpoProducts()
+    {
+        $sql = "SELECT * FROM detail WHERE detail_Category = 5";
         $result = $this->conn->query($sql);
         return $result;
     }

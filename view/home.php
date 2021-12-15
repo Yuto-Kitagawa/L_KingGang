@@ -46,8 +46,6 @@ session_start();
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="post.php">投稿</a>
                 </li>
-
-                </li>
                 <!-- ドロップダウンメニュー -->
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['username'] ?></a>
@@ -144,7 +142,7 @@ session_start();
               while ($elec = $elec_array->fetch_assoc()) {
               ?>
                 <div class=" col-3 col-lg-4 px-5 slide">
-                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $elec['detail_Image1'] ?>" href="post_detail.phpno=<?= $elec['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                  <a href="./post_detail.php?id=<?= $elec['id'] ?>"><img class="w-100 text-center" src="../img/<?= $elec['detail_Image1'] ?>" href="post_detail.phpno=<?= $elec['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
                     <p class="p-2 lead"><?= $elec['detail_explanation'] ?></p>
                   </a>
                 </div>
@@ -152,96 +150,50 @@ session_start();
               <?php
               }
               ?>
-              <!-- <div class="w-25 px-5 slide">
-                <a href="./post_detail.php"><img class="w-100 text-center" src="../images/test1.jpg" href="#Home" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真"></a>
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" href="#Home" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" href="#Home" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" href="#Home" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" href="#Home" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" href="#Home" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div> -->
             </div>
           </div>
           <hr>
 
-          <div id="elec">
+          <div id="funi">
             <h3>
               <div id="furniture" class="u-border-title-b pb-3">家具</div>
             </h3>
             <div class="x-scroll">
-              <div class="w-25 px-5 slide">
-                <a href="#"><img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真"></a>
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
+              <?php
+              $funi_array = $func->getFuniProducts();
+              while ($funi = $funi_array->fetch_assoc()) {
+              ?>
+                <div class=" col-3 col-lg-4 px-5 slide">
+                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $funi['detail_Image1'] ?>" href="post_detail.phpno=<?= $funi['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                    <p class="p-2 lead"><?= $funi['detail_explanation'] ?></p>
+                  </a>
+                </div>
+
+              <?php
+              }
+              ?>
             </div>
           </div>
           <hr>
 
-          <div id="elec">
+          <div id="inte">
             <h3>
               <div id="interior" class="u-border-title-b pb-3">インテリア</div>
             </h3>
             <div class="x-scroll">
-              <div class="w-25 px-5 slide">
-                <a href="#"><img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真"></a>
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
+              <?php
+              $inte_array = $func->getInteProducts();
+              while ($inte = $inte_array->fetch_assoc()) {
+              ?>
+                <div class=" col-3 col-lg-4 px-5 slide">
+                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $inte['detail_Image1'] ?>" href="post_detail.phpno=<?= $inte['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                    <p class="p-2 lead"><?= $inte['detail_explanation'] ?></p>
+                  </a>
+                </div>
+
+              <?php
+              }
+              ?>
             </div>
           </div>
           <hr>
@@ -250,30 +202,19 @@ session_start();
               <div id="clothes" class="u-border-title-b pb-3">服</div>
             </h3>
             <div class="x-scroll">
-              <div class="w-25 px-5 slide">
-                <a href="#"><img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真"></a>
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
+              <?php
+              $huku_array = $func->getHukuProducts();
+              while ($huku = $huku_array->fetch_assoc()) {
+              ?>
+                <div class=" col-3 col-lg-4 px-5 slide">
+                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $huku['detail_Image1'] ?>" href="post_detail.phpno=<?= $huku['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                    <p class="p-2 lead"><?= $huku['detail_explanation'] ?></p>
+                  </a>
+                </div>
+
+              <?php
+              }
+              ?>
             </div>
           </div>
           <hr>
@@ -282,30 +223,18 @@ session_start();
               <div id="sports" class="u-border-title-b pb-3">スポーツ用品</div>
             </h3>
             <div class="x-scroll">
-              <div class="w-25 px-5 slide">
-                <a href="shohin.html"><img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真"></a>
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
-              <div class="w-25 px-5 slide">
-                <img class="w-100 text-center" src="../images/test1.jpg" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
-                <p>------------------------------------</p>
-              </div>
+              <?php
+              $spo_array = $func->getSpoProducts();
+              while ($spo = $spo_array->fetch_assoc()) {
+              ?>
+                <div class=" col-3 col-lg-4 px-5 slide">
+                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $spo['detail_Image1'] ?>" href="post_detail.phpno=<?= $spo['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                    <p class="p-2 lead"><?= $spo['detail_explanation'] ?></p>
+                  </a>
+                </div>
+              <?php
+              }
+              ?>
             </div>
           </div>
         </div>
