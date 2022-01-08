@@ -6,6 +6,7 @@ $func = new Functions;
 
 $item = $func->getItems($id)->fetch_assoc();
 $detail = $func->getDetail($id)->fetch_assoc();
+session_start();
 ?>
 
 
@@ -78,40 +79,56 @@ $detail = $func->getDetail($id)->fetch_assoc();
 
 <body>
     <!-- 画面上のナビゲーションバー -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fas fa-crown text-warning h4"></i></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">ホーム</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="post.php">投稿</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">設定</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['username'] ?></a>
-                        <ul id="menu-bar" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#profile">プロフィール</a></li>
-                            <li><a class="dropdown-item" href="#">購入履歴</a></li>
-                            <li><a class="dropdown-item" href="#">投稿履歴</a></li>
-                            <li><a class="dropdown-item" href="../actions/logout.php">ログアウト</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form action="../actions/searchitem.php" method="POST" class="d-flex">
-                    <input class="form-control me-2" name="item" type="search" placeholder="Search" aria-label="Search" required>
-                    <button class="btn btn-outline-dark" type="submit">Search</button>
-                </form>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">キングガング</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./home.php">ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="post.php">投稿</a>
+                        </li>
+                        <!-- ドロップダウンメニュー -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['username'] ?></a>
+                            <ul id="menu-bar" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#profile">プロフィール</a></li>
+                                <li><a class="dropdown-item" href="#">購入履歴</a></li>
+                                <li><a class="dropdown-item" href="#">投稿履歴</a></li>
+                                <li><a class="dropdown-item" href="../actions/logout.php">ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <?php
+                        if (!isset($_SESSION['id'])) { ?>
+                            <?php
+                            ?>
+                            <li class="nav-item list-unstyled ">
+                                <a class="nav-link active text-dark" aria-current="page" href="login.html">ログイン</a>
+                            </li>
+                            <li class="nav-item list-unstyled ">
+                                <a class="nav-link active text-dark" aria-current="page" href="createUser.html">新規登録</a>
+                            </li>
+                        <?php
+                        }
+                        ?>
+                    </div>
+
+                    <form action="../actions/searchitem.php" method="POST" class="d-flex">
+                        <input class="form-control me-2" name="item" type="search" placeholder="Search" aria-label="Search" required>
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <div class="w-100">
         <div class="explain-wrapper d-flex w-100 h-100">
@@ -124,7 +141,7 @@ $detail = $func->getDetail($id)->fetch_assoc();
                 <div class="explain lead px-5"><?= $detail['detail_explanation'] ?></div>
                 <hr class="w-75 m-auto my-5">
                 <div class="d-flex align-items-center my-3 justify-content-evenly">
-                    <div class="lead">取引先: </div>
+                    <div class="lead">取引場所: </div>
                     <div class="address lead"><?= $detail['detail_Location'] ?></div>
                 </div>
                 <div class="w-100 text-center my-5">

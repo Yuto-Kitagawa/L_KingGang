@@ -90,6 +90,7 @@ session_start();
                             <li><a class="dropdown-item" href="#profile">プロフィール</a></li>
                             <li><a class="dropdown-item" href="#">購入履歴</a></li>
                             <li><a class="dropdown-item" href="#">投稿履歴</a></li>
+                            <li><a class="dropdown-item" href="../actions/logout.php">ログアウト</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -130,7 +131,7 @@ session_start();
 
                     <div class="input-season-wrapper p-2 m-4">
                         <select class="form-select w-25 m-auto" name="season" aria-label="Default select example">
-                            <option selected>季節を選択</option>
+                            <option selected value="">季節を選択</option>
                             <option value="1">春</option>
                             <option value="2">夏</option>
                             <option value="3">秋</option>
@@ -140,7 +141,7 @@ session_start();
 
                     <div class="input-cate-wrapper p-2 m-4">
                         <select class="form-select w-25 m-auto" name="category" aria-label="Default select example">
-                            <option selected>カテゴリーを選択</option>
+                            <option selected value="">カテゴリーを選択</option>
                             <option value="1">家電</option>
                             <option value="2">家具</option>
                             <option value="3">インテリア</option>

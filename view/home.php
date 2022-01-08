@@ -142,7 +142,7 @@ session_start();
               while ($elec = $elec_array->fetch_assoc()) {
               ?>
                 <div class=" col-3 col-lg-4 px-5 slide">
-                  <a href="./post_detail.php?id=<?= $elec['id'] ?>"><img class="w-100 text-center" src="../img/<?= $elec['detail_Image1'] ?>" href="post_detail.phpno=<?= $elec['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                  <a href="./post_detail.php?id=<?= $elec['post_No'] ?>"><img class="w-100 text-center" src="../img/<?= $elec['detail_Image1'] ?>" href="post_detail.phpno=<?= $elec['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
                     <p class="p-2 lead"><?= $elec['detail_explanation'] ?></p>
                   </a>
                 </div>
@@ -164,7 +164,7 @@ session_start();
               while ($funi = $funi_array->fetch_assoc()) {
               ?>
                 <div class=" col-3 col-lg-4 px-5 slide">
-                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $funi['detail_Image1'] ?>" href="post_detail.phpno=<?= $funi['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                  <a href="post_detail.php?id=<?= $funi['post_No'] ?>"><img class="w-100 text-center" src="../img/<?= $funi['detail_Image1'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
                     <p class="p-2 lead"><?= $funi['detail_explanation'] ?></p>
                   </a>
                 </div>
@@ -186,11 +186,10 @@ session_start();
               while ($inte = $inte_array->fetch_assoc()) {
               ?>
                 <div class=" col-3 col-lg-4 px-5 slide">
-                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $inte['detail_Image1'] ?>" href="post_detail.phpno=<?= $inte['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                  <a href="post_detail.php?id=<?= $inte['post_No'] ?>"><img class="w-100 text-center" src="../img/<?= $inte['detail_Image1'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
                     <p class="p-2 lead"><?= $inte['detail_explanation'] ?></p>
                   </a>
                 </div>
-
               <?php
               }
               ?>
@@ -207,7 +206,7 @@ session_start();
               while ($huku = $huku_array->fetch_assoc()) {
               ?>
                 <div class=" col-3 col-lg-4 px-5 slide">
-                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $huku['detail_Image1'] ?>" href="post_detail.phpno=<?= $huku['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                  <a href="post_detail.php?id=<?= $huku['post_No'] ?>"><img class=" w-100 text-center" src="../img/<?= $huku['detail_Image1'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
                     <p class="p-2 lead"><?= $huku['detail_explanation'] ?></p>
                   </a>
                 </div>
@@ -228,7 +227,7 @@ session_start();
               while ($spo = $spo_array->fetch_assoc()) {
               ?>
                 <div class=" col-3 col-lg-4 px-5 slide">
-                  <a href="./post_detail.php"><img class="w-100 text-center" src="../img/<?= $spo['detail_Image1'] ?>" href="post_detail.phpno=<?= $spo['post_No'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
+                  <a href="post_detail.php?id=<?= $spo['post_No'] ?>"><img class="w-100 text-center" src="../img/<?= $spo['detail_Image1'] ?>" width="150vw" height="150vh" style="object-fit:cover;" alt="ユーザーの写真">
                     <p class="p-2 lead"><?= $spo['detail_explanation'] ?></p>
                   </a>
                 </div>
