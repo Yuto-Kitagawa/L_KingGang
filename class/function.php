@@ -4,24 +4,16 @@ require_once "database.php";
 
 class Functions extends Database
 {
-    //確認用
-    public function Confirm($e)
-    {
-        var_dump($e);
-        die();
-    }
-
+    #商品の簡易情報を返す関数
     public function getItems($item)
     {
         $sql = "SELECT * FROM post WHERE post_No = $item;";
         if ($result = $this->conn->query($sql)) {
             return $result;
-        } else {
-            var_dump($this->conn->error);
-            die();
         }
     }
 
+    #検索して、キーワードが入っている商品を返す関数
     public function getItemsList($item)
     {
         $sql = "SELECT * FROM post WHERE post_Name LIKE '%$item%';";
@@ -30,27 +22,24 @@ class Functions extends Database
         }
     }
 
+    #商品の詳細情報を返す関数
     public function getItemsListDetail($id)
     {
         $sql = "SELECT * FROM detail WHERE post_No = $id;";
         if ($result = $this->conn->query($sql)) {
             return $result;
-        } else {
-            var_dump($this->conn->error);
-            die();
         }
     }
 
+    #ユーザー情報を返す関数
     public function getProfile($id)
     {
         $sql = "SELECT * FROM user WHERE user_Id = '$id';";
         if ($result = $this->conn->query($sql)) {
             return $result;
-        } else {
-            var_dump($this->conn->error);
-            die();
         }
     }
+
 
     public function getDetail($id)
     {
@@ -59,6 +48,7 @@ class Functions extends Database
         return $result;
     }
 
+    #ログイン機能
     public function login($id, $password)
     {
         $sql = "SELECT `user_Id`,`user_Password`,`user_Name` FROM user WHERE `user_Id` = '$id'";
