@@ -204,4 +204,11 @@ class Functions extends Database
         $result = $this->conn->query($sql);
         return $result;
     }
+
+    public function buy($id)
+    {
+        $sql = "UPDATE 商品表 SET 単価 = 2500
+ WHERE 商品コード = '0004' ;
+ "
+    }
 }

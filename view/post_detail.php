@@ -77,6 +77,22 @@ session_start();
 
 </html>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">確認</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+                <a href="../actions/buy.php" type="button" class="btn btn-danger">本当に購入しますか？</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <body>
     <!-- 画面上のナビゲーションバー -->
     <header>
@@ -147,8 +163,11 @@ session_start();
                 <div class="w-100 text-center my-5">
                     <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d209989.4496583871!2d135.34594990674734!3d34.67780033079795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e6553406e2e1%3A0xc55bc16ee46a2fe7!2z5aSn6Ziq5bqc5aSn6Ziq5biC!5e0!3m2!1sja!2sjp!4v1635145671609!5m2!1sja!2sjp" width="85%%" style="border:0;height: 40vh !important;" allowfullscreen="" loading="lazy"></iframe> -->
                 </div>
-                <div class="w-100 text-center">
+                <div class="d-flex justify-content-around">
                     <a href="./chat.php?userid=<?= $item['user_Id'] ?>" class="btn btn-outline-primary w-25">相談</a>
+                    <button type="button" class="w-25 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        購入
+                    </button>
                 </div>
             </div>
             <div class="pic-wrapper h-100 text-center col-12 col-lg-6">
@@ -165,5 +184,6 @@ session_start();
     </script>
 
 </body>
+
 
 </html>
