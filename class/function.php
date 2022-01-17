@@ -48,6 +48,21 @@ class Functions extends Database
         return $result;
     }
 
+    public function getPosted($id)
+    {
+        $sql = "SELECT post_No FROM post WHERE user_Id = '$id';";
+        $result_array = $this->conn->query($sql);
+        return $result_array;
+    }
+
+    public function getPostItems($id)
+    {
+        $sql = "SELECT * FROM post WHERE user_Id = '$id';";
+        if ($result = $this->conn->query($sql)) {
+            return $result;
+        }
+    }
+
     #ログイン機能
     public function login($id, $password)
     {

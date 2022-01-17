@@ -89,7 +89,7 @@ session_start();
                         <ul id="menu-bar" class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#profile">プロフィール</a></li>
                             <li><a class="dropdown-item" href="#">購入履歴</a></li>
-                            <li><a class="dropdown-item" href="#">投稿履歴</a></li>
+                            <li><a class="dropdown-item" href="posted.php">投稿履歴</a></li>
                             <li><a class="dropdown-item" href="../actions/logout.php">ログアウト</a></li>
                         </ul>
                     </li>
