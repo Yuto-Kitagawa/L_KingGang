@@ -158,7 +158,7 @@ session_start();
                 </div>
                 <div class="w-100 text-center my-5"> </div>
                 <div class="d-flex justify-content-around">
-                    <a href="../action/chat.php?userid=<?= $item['user_Id'] ?>" class="btn btn-outline-primary w-25">相談</a>
+                    <a href="../actions/chat.php?postid=<?= $item['post_No'] ?>" class="btn btn-outline-primary w-25">相談</a>
                     <button type="button" class="w-25 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         購入
                     </button>

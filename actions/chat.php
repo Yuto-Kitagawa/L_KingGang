@@ -1,6 +1,6 @@
 <?php
 include "../class/function.php";
-$id = $_GET['postId'];
+$id = $_GET['postid'];
 $func = new Functions;
-$func->insertRoomId($id);
+$func->insertRoomId((int)$id);
 exit();

@@ -211,19 +211,39 @@ class Functions extends Database
     }
     public function insertRoomId($id)
     {
-        $sql = "SELECT user_Id from post WHERE post_Id = $id;";
+        $sql = "SELECT user_Id from post WHERE post_No = $id;";
+        $result_array = $this->conn->query($sql);
+
+        if ($result = $result_array->fetch_assoc()) {
+            session_start();
+            $me = $_SESSION['id'];
+            $you = $result['user_Id'];
+            $roomid = $id . $me . $you;
+
+            $sql2 = "INSERT INTO room (room_Id,user_Id) VALUE ('$roomid','$me');";
+            $sql3 = "INSERT INTO room (room_Id,user_Id) VALUE ('$roomid','$you');";
+
+            $this->conn->query($sql2);
+            $this->conn->query($sql3);
+            header('Location: ../view/chat.php?postid=' . $id);
+            exit();
+        }
+    }
+
+    public function getUser($id)
+    {
+        $sql = "SELECT user_Id FROM post WHERE post_No = $id;";
         $result = $this->conn->query($sql)->fetch_assoc();
-        session_start();
-        $me = $_SESSION['me'];
-        $you = $result['user_Id'];
-        $roomid = $id . $me . $you;
+        $name = $result['user_Id'];
+        $sql2 = "SELECT user_Name FROM user WHERE user_Id = '$name'";
+        $result2 = $this->conn->query($sql2);
+        return $result2->fetch_assoc();
+    }
 
-        $sql2 = "INSERT INTO room (room_Id,user_Id) VALUE ('$roomid','$me');";
-        $sql3 = "INSERT INTO room (room_Id,user_Id) VALUE ('$roomid','$you');";
-
-        $this->query->conn($sql2);
-        $this->query->conn($sql3);
-        header('Location: ../view/chat.php?postid=' . $id);
-        exit();
+    public function getUserFomUser($id)
+    {
+        $sql2 = "SELECT user_Name FROM user WHERE user_Id = '$id'";
+        $result2 = $this->conn->query($sql2);
+        return $result2->fetch_assoc();
     }
 }

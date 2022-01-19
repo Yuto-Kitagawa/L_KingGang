@@ -1,6 +1,15 @@
 <?php
+include "../class/function.php";
 session_start();
-$you = $_GET['userid'];
+$postid = $_GET['postid'];
+$func = new Functions;
+$you_array = $func->getUser($postid);
+$you = $you_array['user_Name'];
+$mes = $_SESSION['id'];
+$me_array = $func->getUserFomUser($mes);
+$me = $me_array['user_Name'];
+$roomid = $postid . $me . $you;
+
 ?>
 
 <!DOCTYPE html>
@@ -55,17 +64,27 @@ $you = $_GET['userid'];
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     firebase.initializeApp(firebaseConfig);
-    let rel = firebase.database().ref('room_id').update({
-      '120022': {
-        "text": "fugafuga_fuga",
-        "to": "fugafuga_fugafuga"
-      }
-    });
 
-    var commentsRef = firebase.database().ref('comments')
+    var db = firebase.database();
 
-    commentsRef.once('value').then(function(snapshot) {
-      initCommentElement(snapshot.val());
+    document.querySelector('#messageSendBtn').addEventListener('click', () => {
+      var input_text = document.querySelector('#messageInput');
+      var time = Date.now();
+
+      <?php
+      $date = new DateTime();
+      $time = strtotime($date->format("Y/m/d H:i:s"));
+      ?>
+
+      var messagesRef = firebase.database().ref('<?= $roomid ?>')
+      messagesRef.push({
+        "<?= $time ?>": {
+          "text": input_text.value,
+          "to": "<?= $you ?>"
+        }
+      });
+
+      input_text.value = "";
     });
   </script>
 
@@ -140,8 +159,6 @@ $you = $_GET['userid'];
       <input type="submit" class="btn btn-primary" id="messageSendBtn">
     </div>
   </div>
-
-
 </body>
 
 </html>
