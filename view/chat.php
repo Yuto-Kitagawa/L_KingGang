@@ -1,29 +1,79 @@
 <?php
-
 session_start();
-$_SESSION['me'] = "kitagawa";
-
+$you = $_GET['userid'];
 ?>
 
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="chat.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- フォント用URLです。google fontは商用でも使えるらしいので、もし使われるのであればfamily=と&の間にその字体の名前を入れてください -->
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
+  <!-- bootstrapのURLです。消さないでください -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <!-- googlefontのURL。消すな -->
+  <link href="https://fonts.googleapis.com/css2?family=Yuji+Mai&display=swap" rel="stylesheet">
+  <!-- jQueryのURLです。多分使っているので消さないでください。日付などの処理は別でコード下に書いていますが、jQueryは使っていません。 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- アイコン用のURLです。商用利用はOKです。アイコンはサイトでコードをコピーして使えます -->
+  <!-- https://kit.fontawesome.com -->
+  <script src="https://kit.fontawesome.com/f3d03e8132.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./index.css">
+  <title></title>
 </head>
 
 <body>
+  <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
+    import {
+      getAnalytics
+    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-analytics.js";
+
+    import {
+      getDatabase
+    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDEzZESrhy3MLVI4KNSoGTF0lRZSqZikKU",
+      authDomain: "realtimedatabase-l-king-gang.firebaseapp.com",
+      databaseURL: "https://realtimedatabase-l-king-gang-default-rtdb.firebaseio.com",
+      projectId: "realtimedatabase-l-king-gang",
+      storageBucket: "realtimedatabase-l-king-gang.appspot.com",
+      messagingSenderId: "108110142074",
+      appId: "1:108110142074:web:2efbc35caf27b78fe6f9c3",
+      measurementId: "G-MV74KFKVHQ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
+    let rel = firebase.database().ref('room_id').update({
+      '120022': {
+        "text": "fugafuga_fuga",
+        "to": "fugafuga_fugafuga"
+      }
+    });
+
+    var commentsRef = firebase.database().ref('comments')
+
+    commentsRef.once('value').then(function(snapshot) {
+      initCommentElement(snapshot.val());
+    });
+  </script>
 
   <!-- ナビゲーション -->
+
   <section>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">キングガング</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +116,6 @@ $_SESSION['me'] = "kitagawa";
               }
               ?>
             </div>
-
             <form action="../actions/searchitem.php" method="POST" class="d-flex">
               <input class="form-control me-2" name="item" type="search" placeholder="Search" aria-label="Search" required>
               <button class="btn btn-outline-success" type="submit">Search</button>
@@ -76,25 +125,23 @@ $_SESSION['me'] = "kitagawa";
       </nav>
     </header>
   </section>
-  <div class="panel-default">
-    <div class="panel-heading">
-      <p id="tousername"></p>
+
+
+  <main>
+    <div class="talk-wrapper" style="margin-top: 10vh;">
+      <div class="me w-100 text-end lead p-3 ">Me</div>
+      <div class="you lead p-3">You</div>
     </div>
-    <div id="scroller" class="panel-body">
-      <ul id='messages'>
-      </ul>
-    </div>
-    <div class="panel-footer">
-      <input type='text' class="form-control" id="messageInput" placeholder="メッセージ内容を入力してください">
-      <input type="submit" id="sendMessageBtn">
+  </main>
+
+  <div class="col-8 col-lg-6 m-auto fixed-bottom mb-3">
+    <div class="panel-footer d-flex">
+      <input type="text" class="form-control me-2" id="messageInput" placeholder="メッセージ内容を入力してください">
+      <input type="submit" class="btn btn-primary" id="messageSendBtn">
     </div>
   </div>
+
+
 </body>
-<script>
-  let myname = <?= "\"" . $_SESSION['me'] . "\"" ?>;
-  // セッションの格納
-  window.sessionStorage.setItem(['me'], [myname]);
-</script>
-<script src="chat.js"></script>
 
 </html>

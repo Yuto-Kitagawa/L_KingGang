@@ -207,8 +207,23 @@ class Functions extends Database
 
     public function buy($id)
     {
-        $sql = "UPDATE 商品表 SET 単価 = 2500
- WHERE 商品コード = '0004' ;
- "
+        $sql = "UPDATE 商品表 SET 単価 = 2500 WHERE 商品コード = '0004' ;";
+    }
+    public function insertRoomId($id)
+    {
+        $sql = "SELECT user_Id from post WHERE post_Id = $id;";
+        $result = $this->conn->query($sql)->fetch_assoc();
+        session_start();
+        $me = $_SESSION['me'];
+        $you = $result['user_Id'];
+        $roomid = $id . $me . $you;
+
+        $sql2 = "INSERT INTO room (room_Id,user_Id) VALUE ('$roomid','$me');";
+        $sql3 = "INSERT INTO room (room_Id,user_Id) VALUE ('$roomid','$you');";
+
+        $this->query->conn($sql2);
+        $this->query->conn($sql3);
+        header('Location: ../view/chat.php?postid=' . $id);
+        exit();
     }
 }
