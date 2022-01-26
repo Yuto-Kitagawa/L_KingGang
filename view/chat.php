@@ -36,57 +36,7 @@ $roomid = $postid . $me . $you;
 </head>
 
 <body>
-  <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
-    import {
-      getAnalytics
-    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-analytics.js";
 
-    import {
-      getDatabase
-    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDEzZESrhy3MLVI4KNSoGTF0lRZSqZikKU",
-      authDomain: "realtimedatabase-l-king-gang.firebaseapp.com",
-      databaseURL: "https://realtimedatabase-l-king-gang-default-rtdb.firebaseio.com",
-      projectId: "realtimedatabase-l-king-gang",
-      storageBucket: "realtimedatabase-l-king-gang.appspot.com",
-      messagingSenderId: "108110142074",
-      appId: "1:108110142074:web:2efbc35caf27b78fe6f9c3",
-      measurementId: "G-MV74KFKVHQ"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    firebase.initializeApp(firebaseConfig);
-
-    var db = firebase.database();
-
-    document.querySelector('#messageSendBtn').addEventListener('click', () => {
-      var input_text = document.querySelector('#messageInput');
-      var time = Date.now();
-
-      <?php
-      $date = new DateTime();
-      $time = strtotime($date->format("Y/m/d H:i:s"));
-      ?>
-
-      var messagesRef = firebase.database().ref('<?= $roomid ?>')
-      messagesRef.push({
-        "<?= $time ?>": {
-          "text": input_text.value,
-          "to": "<?= $you ?>"
-        }
-      });
-
-      input_text.value = "";
-    });
-  </script>
 
   <!-- ナビゲーション -->
 
@@ -147,18 +97,97 @@ $roomid = $postid . $me . $you;
 
 
   <main>
-    <div class="talk-wrapper" style="margin-top: 10vh;">
-      <div class="me w-100 text-end lead p-3 ">Me</div>
-      <div class="you lead p-3">You</div>
-    </div>
+    <div class="talk-wrapper col-8 col-lg-8" id="talk" style="margin: 10vh auto;"></div>
   </main>
 
   <div class="col-8 col-lg-6 m-auto fixed-bottom mb-3">
     <div class="panel-footer d-flex">
+
       <input type="text" class="form-control me-2" id="messageInput" placeholder="メッセージ内容を入力してください">
       <input type="submit" class="btn btn-primary" id="messageSendBtn">
     </div>
   </div>
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
+    import {
+      getAnalytics
+    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-analytics.js";
+
+    import {
+      getDatabase
+    } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDEzZESrhy3MLVI4KNSoGTF0lRZSqZikKU",
+      authDomain: "realtimedatabase-l-king-gang.firebaseapp.com",
+      databaseURL: "https://realtimedatabase-l-king-gang-default-rtdb.firebaseio.com",
+      projectId: "realtimedatabase-l-king-gang",
+      storageBucket: "realtimedatabase-l-king-gang.appspot.com",
+      messagingSenderId: "108110142074",
+      appId: "1:108110142074:web:2efbc35caf27b78fe6f9c3",
+      measurementId: "G-MV74KFKVHQ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
+
+    var db = firebase.database();
+
+    document.querySelector('#messageSendBtn').addEventListener('click', () => {
+      var input_text = document.querySelector('#messageInput');
+
+      <?php
+      $now = microtime(false);
+      $now_str = (string)$now;
+      $now_str = str_replace(".", '', $now_str);
+      $now_str = str_replace(" ", '', $now_str);
+      ?>
+
+      var messagesRef = firebase.database().ref('<?= $roomid ?>');
+      messagesRef.child("<?= $now_str ?>").set({
+        "text": input_text.value,
+        "to": "<?= $me ?>"
+      });
+
+      input_text.value = "";
+    });
+
+
+    db.ref('<?= $roomid ?>').on("value", (data) => {
+      if (data) {
+        const rootList = data.val();
+        const key = data.key;
+        let timeList = [];
+        // データオブジェクトを配列に変更する
+        if (rootList != null) {
+          Object.keys(rootList).forEach((val, key) => {
+            rootList[val].id = val;
+            console.log(timeList.includes(rootList[val].id));
+
+            if (timeList.includes(rootList[val].id) == true) {
+              //なんもせーへん
+            } else {
+              if (rootList[val]['to'] == "<?= $me ?>") {
+                document.querySelector('#talk').innerHTML += "<div class='me w-100 text-end lead'>" + rootList[val]['text'] + "</div>";
+                timeList.push(rootList[val].id);
+              } else {
+                document.querySelector('#talk').innerHTML += "<div class='you lead p-3'>" + rootList[val]['text'] + "</div>";
+                timeList.push(rootList[val].id);
+              }
+            }
+          })
+          console.log(timeList);
+        }
+
+      }
+    });
+  </script>
 </body>
 
 </html>
