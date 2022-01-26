@@ -97,7 +97,7 @@ $roomid = $postid . $me . $you;
 
 
   <main>
-    <div class="talk-wrapper col-8 col-lg-8" id="talk" style="margin: 10vh auto;"></div>
+    <div class="talk-wrapper col-8 col-lg-4 border-1" id="talk" style="margin: 10vh auto;"></div>
   </main>
 
   <div class="col-8 col-lg-6 m-auto fixed-bottom mb-3">
@@ -142,15 +142,11 @@ $roomid = $postid . $me . $you;
     document.querySelector('#messageSendBtn').addEventListener('click', () => {
       var input_text = document.querySelector('#messageInput');
 
-      <?php
-      $now = microtime(false);
-      $now_str = (string)$now;
-      $now_str = str_replace(".", '', $now_str);
-      $now_str = str_replace(" ", '', $now_str);
-      ?>
+      let d2 = new Date();
+      let mil = d2.getTime();
 
       var messagesRef = firebase.database().ref('<?= $roomid ?>');
-      messagesRef.child("<?= $now_str ?>").set({
+      messagesRef.child(String(mil)).set({
         "text": input_text.value,
         "to": "<?= $me ?>"
       });
@@ -159,32 +155,31 @@ $roomid = $postid . $me . $you;
     });
 
 
+    let timeList = [];
     db.ref('<?= $roomid ?>').on("value", (data) => {
       if (data) {
         const rootList = data.val();
         const key = data.key;
-        let timeList = [];
         // データオブジェクトを配列に変更する
         if (rootList != null) {
           Object.keys(rootList).forEach((val, key) => {
             rootList[val].id = val;
+            console.log(rootList[val].id);
             console.log(timeList.includes(rootList[val].id));
-
-            if (timeList.includes(rootList[val].id) == true) {
+            if (timeList.includes(String(rootList[val].id)) == true) {
               //なんもせーへん
             } else {
               if (rootList[val]['to'] == "<?= $me ?>") {
-                document.querySelector('#talk').innerHTML += "<div class='me w-100 text-end lead'>" + rootList[val]['text'] + "</div>";
-                timeList.push(rootList[val].id);
+                document.querySelector('#talk').innerHTML += "<div class='me w-100 text-end text-nowrap lead my-1' style='padding-left:90%'><div class='bg-primary text-white p-2' style='width:fit-content;margin-end:0 !important; border-radius:10px;'>" + rootList[val]['text'] + "</div></div>";
+                timeList.push(String(rootList[val].id));
               } else {
-                document.querySelector('#talk').innerHTML += "<div class='you lead p-3'>" + rootList[val]['text'] + "</div>";
-                timeList.push(rootList[val].id);
+                document.querySelector('#talk').innerHTML += "<div class='you w-100 text-start text-nowrap lead my-1'><div class='bg-secondary text-white p-2' style='width:fit-content;margin-end:0 !important; border-radius:10px;'>" + rootList[val]['text'] + "</div></div>";
+                timeList.push(String(rootList[val].id));
               }
             }
           })
           console.log(timeList);
         }
-
       }
     });
   </script>

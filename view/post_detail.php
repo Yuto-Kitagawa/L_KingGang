@@ -94,7 +94,7 @@ session_start();
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">キングガング</a>
+                <a class="navbar-brand" href="./home.php">キングガング</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -155,6 +155,16 @@ session_start();
                 <div class="d-flex align-items-center my-3 justify-content-evenly">
                     <div class="lead">取引場所: </div>
                     <div class="address lead"><?= $detail['detail_Location'] ?></div>
+                </div>
+                <hr class="w-75 m-auto my-5">
+                <div class="d-flex align-items-center my-3 justify-content-evenly">
+                    <div class="lead">投稿者: </div>
+                    <div class="address lead">
+                        <?php $userID = $item['user_Id'];
+                        $userName_array = $func->getProfile($userID);
+                        $userName = $userName_array->fetch_assoc();
+                        echo $userName['user_Name'];
+                        ?></div>
                 </div>
                 <div class="w-100 text-center my-5"> </div>
                 <div class="d-flex justify-content-around">
